@@ -1,36 +1,28 @@
-import re
-import nltk
+import spacy
 
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
-
-# Initialize once
-stop_words = set(stopwords.words("english"))
-lemmatizer = WordNetLemmatizer()
+# Load spaCy English model only once
+nlp = spacy.load("en_core_web_sm")
 
 
 def clean_text(text):
     """
-    Clean extracted PDF text for NLP processing.
+    Clean English text using spaCy.
     """
 
-    # Convert to lowercase
-    text = text.lower()
+    doc = nlp(text)
 
-    # Remove special characters and numbers
-    text = re.sub(r"[^a-zA-Z\s]", "", text)
+    cleaned_words = []
 
-    # Tokenize
-    words = word_tokenize(text)
+    for token in doc:
 
-    # Remove stop words
-    words = [word for word in words if word not in stop_words]
+        if (
+            not token.is_stop
+            and not token.is_punct
+            and not token.is_space
+        ):
 
-    # Lemmatization
-    words = [lemmatizer.lemmatize(word) for word in words]
+            cleaned_words.append(token.lemma_.lower())
 
-    # Join words back into a sentence
-    cleaned_text = " ".join(words)
+    cleaned_text = " ".join(cleaned_words)
 
     return cleaned_text

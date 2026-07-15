@@ -24,5 +24,16 @@ Summaries:
 
 {merged_text}
 """
+    print("=" * 60)
+    print("MERGE PROMPT")
+    print("=" * 60)
+    print(prompt[:2000])     # print first 2000 chars
+    print("=" * 60)
 
-    return client.generate(prompt)
+    result = client.generate(prompt)
+
+    print("MERGE RESULT:")
+    print(repr(result))
+
+    return result
+    # return client.generate(prompt)

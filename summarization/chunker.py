@@ -1,4 +1,4 @@
-def split_into_chunks(text, chunk_size=2000):
+def split_into_chunks(text, chunk_size=1200):
     """
     Split text into chunks of approximately chunk_size words.
     """

@@ -1,6 +1,5 @@
 import ollama
 
-
 class OllamaClient:
 
     def __init__(self, model="qwen3:1.7b"):
@@ -8,18 +7,19 @@ class OllamaClient:
 
     def generate(self, prompt):
 
-        response = ollama.chat(
+        response = ollama.generate(
             model=self.model,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            options={
-                "num_predict":350,
-                "temperature":0.2
-            }
+            prompt=prompt
         )
 
-        return response["message"]["content"]
+        print("\n========== RAW RESPONSE ==========")
+        print(response)
+        print("==================================")
+
+        print("response field:")
+        print(repr(response.get("response")))
+
+        print("thinking field:")
+        print(repr(response.get("thinking")))
+
+        return response.get("response", "")

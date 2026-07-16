@@ -27,3 +27,11 @@ __pycache__/
 # Build
 build/
 dist/
+
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+.env
+*.log

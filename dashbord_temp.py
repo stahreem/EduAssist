@@ -276,3 +276,21 @@ Upload a PDF document to
             display_quiz(
                 st.session_state.quiz
             )      
+
+            
+
+            # st.success("Document Processed Successfully ✅")
+
+            # st.write("### Debug")
+
+            # st.write("Filename:", uploaded_file.name)
+
+            # st.write("Language:", st.session_state.language_name)
+
+            # st.write("Language Code:", st.session_state.language_code)
+
+            # st.write("Extracted Words:",
+            #         len(st.session_state.extracted_text.split()))
+
+            # st.write("Cleaned Words:",
+            #         len(st.session_state.cleaned_text.split()))

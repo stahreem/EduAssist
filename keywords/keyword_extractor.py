@@ -1,3 +1,4 @@
+import streamlit as st
 from keybert import KeyBERT
 
 print("Loading KeyBERT Model...")
@@ -6,7 +7,7 @@ kw_model = KeyBERT(model="all-MiniLM-L6-v2")
 
 print("KeyBERT Loaded Successfully")
 
-
+@st.cache_resource
 def extract_keywords(text):
 
     if not text:

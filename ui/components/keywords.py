@@ -1,7 +1,7 @@
 import streamlit as st
 
 from keywords.keyword_extractor import extract_keywords
-
+from ui.components.translation import show_translation
 
 def show_keywords():
 
@@ -38,3 +38,12 @@ def show_keywords():
         for i, keyword in enumerate(st.session_state.keywords):
 
             cols[i % 4].success(keyword)
+
+        # keyword_text = ", ".join(st.session_state.keywords)
+        keyword_text = ", ".join(
+            [k[0] for k in st.session_state.keywords]
+        )
+        show_translation(
+            text=keyword_text,
+            key="keywords"
+        )

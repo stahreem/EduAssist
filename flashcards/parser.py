@@ -1,29 +1,32 @@
 def parse_flashcards(raw_text):
 
-    """
-    Convert Gemma response into flashcard list.
-    """
-
     flashcards = []
 
     blocks = raw_text.strip().split("\n\n")
 
     for block in blocks:
 
-        lines = block.strip().split("\n")
+        question = ""
+        answer = ""
 
-        if len(lines) < 2:
-            continue
+        for line in block.splitlines():
 
-        question = lines[0].replace("Q:", "").strip()
-        answer = lines[1].replace("A:", "").strip()
+            line = line.strip()
 
-        flashcards.append({
+            if line.startswith("Q:"):
+                question = line.replace("Q:", "").strip()
 
-            "question": question,
+            elif line.startswith("A:"):
+                answer = line.replace("A:", "").strip()
 
-            "answer": answer
+        if question and answer:
 
-        })
+            flashcards.append({
+
+                "question": question,
+
+                "answer": answer
+
+            })
 
     return flashcards

@@ -46,6 +46,11 @@ def run_dashboard():
         st.session_state.chat_history = []
         st.session_state.active_tool = "summary"
 
+        st.session_state.translated_summary = {}
+        st.session_state.translated_keywords = {}
+        st.session_state.translated_quiz = {}
+        st.session_state.translated_flashcards = {}
+        
         data = process_document(uploaded_file)
 
         st.session_state.extracted_text = data["extracted_text"]

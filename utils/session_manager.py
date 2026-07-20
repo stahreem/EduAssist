@@ -8,6 +8,7 @@ def initialize_session():
         "summary": None,
         "keywords": None,
         "quiz": None,
+        "flashcards": None,
         
         "cleaned_text": None,
         "extracted_text": None,
@@ -15,14 +16,17 @@ def initialize_session():
         "language_code": None,
         "language_name": None,
 
-        "flashcards": None,
         "mindmap": None,
-        "translation": None,
+        # "translation": None,
         "chat_history": [],
-        "current_file": None,
         "processing_time": {},
         "active_tool": "summary",
         "current_file": None,
+
+        "translated_summary": {},
+        "translated_keywords": {},
+        "translated_quiz": {},
+        "translated_flashcards": {},
     }
 
     for key, value in defaults.items():

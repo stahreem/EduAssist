@@ -3,10 +3,10 @@ import streamlit as st
 from quiz.quiz_generator import generate_quiz
 from quiz.parser import parse_quiz
 from quiz.formatter import display_quiz
-
+from ui.components.translation import show_translation
 
 def show_quiz():
-
+    print("show_quiz() called")
     if st.button("📝 Generate Quiz", use_container_width=True):
 
         if st.session_state.summary is None:
@@ -35,6 +35,24 @@ def show_quiz():
 
     if st.session_state.quiz is not None:
 
-        display_quiz(
-            st.session_state.quiz
+        display_quiz(st.session_state.quiz)
+
+        quiz = st.session_state.quiz
+        quiz_text = ""
+
+        for q in st.session_state.quiz:
+
+            quiz_text += (
+                f"Question: {q['question']}\n"
+            )
+
+            for option in q["options"]:
+
+                quiz_text += option + "\n"
+
+            quiz_text += f"Answer: {q['answer']}\n\n"
+
+        show_translation(
+            text=quiz_text,
+            key="quiz"
         )

@@ -3,6 +3,7 @@ import streamlit as st
 
 from summarization.summarizer import summarize_text
 from ui.tabs import show_tabs
+from ui.components.translation import show_translation
 
 
 def show_summary():
@@ -75,6 +76,13 @@ def show_summary():
             extracted_text=extracted_text,
             cleaned_text=cleaned_text,
             summary=summary
+        )
+
+        st.divider()
+
+        show_translation(
+            text=summary,
+            key="summary"
         )
 
         with st.expander("🐞 Debug Session"):

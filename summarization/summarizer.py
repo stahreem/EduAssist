@@ -26,7 +26,7 @@ def summarize_text(text):
         chunk_summary = client.generate(prompt)
         
         print(f"\nChunk {i+1} Summary:\n")
-        print(chunk_summary)
+        # print(chunk_summary)
         print("-" * 50)
 
         summaries.append(chunk_summary)
@@ -38,6 +38,6 @@ def summarize_text(text):
     final_summary = merge_summaries(summaries)
 
     print("Merge completed")
-    print(final_summary)
+    # print(final_summary)
 
     return final_summary

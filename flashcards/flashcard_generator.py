@@ -1,5 +1,5 @@
 import ollama
-
+from flashcards.parser import parse_flashcards
 
 def generate_flashcards(summary):
 
@@ -10,26 +10,23 @@ def generate_flashcards(summary):
     prompt = f"""
 You are an educational AI assistant.
 
+
 Create between 5 and 10 high-quality flashcards.
 
-Rules:
-- Each flashcard must cover a different concept.
-- Do not repeat questions.
-- Do not paraphrase the same fact twice.
-- Keep questions concise.
-- Keep answers under 25 words.
+Create exactly 10 flashcards.
 
-Format EXACTLY like this:
+Every flashcard must cover a unique concept.
 
-Q: Question here
-A: Answer here
+Do not repeat information.
 
-Q: Question here
-A: Answer here
+Return ONLY:
 
-Do not number them.
-Do not add explanations.
-Only return flashcards.
+Q: ...
+A: ...
+
+No numbering.
+No markdown.
+No explanations.
 
 Summary:
 
@@ -49,4 +46,8 @@ Summary:
 
     )
 
-    return response["message"]["content"]
+    raw_output = response["message"]["content"]
+
+    flashcards = parse_flashcards(raw_output)
+
+    return flashcards

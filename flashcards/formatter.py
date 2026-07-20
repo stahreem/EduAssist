@@ -19,12 +19,14 @@ def display_flashcards(flashcards):
 
         with st.expander(f"Flashcard {i+1}"):
 
-            st.markdown("### ❓ Question")
-
+            st.caption("Question")
             st.write(card["question"])
 
-            st.markdown("---")
-
-            st.markdown("### ✅ Answer")
-
+            st.caption("Answer")
             st.success(card["answer"])
+
+            # st.markdown("### ❓ Question")
+            # st.write(card["question"])
+            # st.markdown("---")
+            # st.markdown("### ✅ Answer")
+            # st.success(card["answer"])

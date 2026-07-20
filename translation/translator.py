@@ -1,44 +1,22 @@
-import ollama
+from deep_translator import GoogleTranslator
+
+from translation.languages import SUPPORTED_LANGUAGES
 
 
 def translate_text(text, target_language):
 
-    """
-    Translate text into the selected language.
-    """
-
-    if not text or len(text.strip()) == 0:
+    if not text.strip():
         return ""
 
-    prompt = f"""
-You are a professional translator.
+    try:
 
-Translate the following text into {target_language}.
+        language_code = SUPPORTED_LANGUAGES[target_language]
 
-Rules:
-- Preserve the original meaning.
-- Preserve formatting wherever possible.
-- Do NOT summarize.
-- Do NOT explain.
-- Do NOT add extra information.
-- Return ONLY the translated text.
+        return GoogleTranslator(
+            source="auto",
+            target=language_code
+        ).translate(text)
 
-Text:
+    except Exception as e:
 
-{text}
-"""
-
-    response = ollama.chat(
-
-        model="qwen3:1.7b",
-
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
-
-    )
-
-    return response["message"]["content"].strip()
+        return f"Translation Error: {e}"

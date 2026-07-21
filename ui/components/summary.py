@@ -4,7 +4,9 @@ import streamlit as st
 from summarization.summarizer import summarize_text
 from ui.tabs import show_tabs
 from ui.components.translation import show_translation
-
+from evaluation.evaluator import evaluate_summary
+from evaluation.llm_judge import judge_summary
+from ui.components.evaluation import show_evaluation
 
 def show_summary():
 
@@ -70,7 +72,7 @@ def show_summary():
         b.metric("Words", original_words)
         c.metric("Summary Words", summary_words)
         d.metric("Compression", f"{compression:.1f}%")
-        e.metric("Reading Time", f"{reading_time} min")
+        e.metric("Human Reading Time", f"{reading_time} min")
 
         show_tabs(
             extracted_text=extracted_text,
@@ -84,7 +86,35 @@ def show_summary():
             text=summary,
             key="summary"
         )
+        st.divider()
 
+        if st.button(
+            "📊 Evaluate Summary",
+            use_container_width=True
+        ):
+
+            with st.spinner("Evaluating Summary..."):
+
+                evaluation = evaluate_summary(
+                    st.session_state.extracted_text,
+                    st.session_state.summary
+                )
+
+                judge_report = judge_summary(
+                    st.session_state.extracted_text,
+                    st.session_state.summary
+                )
+
+                st.session_state.evaluation = evaluation
+                st.session_state.judge_report = judge_report
+
+        if st.session_state.evaluation is not None:
+
+            show_evaluation(
+                st.session_state.evaluation,
+                st.session_state.judge_report
+            )
+            
         with st.expander("🐞 Debug Session"):
 
             st.write(st.session_state)

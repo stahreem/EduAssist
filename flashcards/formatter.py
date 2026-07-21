@@ -20,10 +20,10 @@ def display_flashcards(flashcards):
         with st.expander(f"Flashcard {i+1}"):
 
             st.caption("Question")
-            st.write(card["question"])
+            st.write(card.get("question", ""))
 
             st.caption("Answer")
-            st.success(card["answer"])
+            st.success(card.get("answer", ""))
 
             # st.markdown("### ❓ Question")
             # st.write(card["question"])

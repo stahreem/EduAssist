@@ -17,5 +17,6 @@ def generate_quiz(summary):
     prompt = QUIZ_PROMPT.format(text=summary)
 
     quiz = client.generate(prompt)
+    print(quiz)
 
     return quiz

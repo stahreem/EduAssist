@@ -1,53 +1,46 @@
-import ollama
+import logging
+
+from models.ollama_client import OllamaClient
+from flashcards.prompts import FLASHCARD_PROMPT
 from flashcards.parser import parse_flashcards
 
+logger = logging.getLogger(__name__)
+
+client = OllamaClient()
+
+
 def generate_flashcards(summary):
-
     """
-    Generate flashcards from summary using Gemma.
+    Generate educational flashcards from the summary.
+    Returns a list of dictionaries:
+    [
+        {
+            "question": "...",
+            "answer": "..."
+        }
+    ]
     """
 
-    prompt = f"""
-You are an educational AI assistant.
+    if not summary or not summary.strip():
+        return []
 
+    try:
 
-Create between 5 and 10 high-quality flashcards.
+        prompt = FLASHCARD_PROMPT.format(
+            text=summary
+        )
 
-Create exactly 10 flashcards.
+        raw_output = client.generate(prompt)
 
-Every flashcard must cover a unique concept.
+        flashcards = parse_flashcards(raw_output)
 
-Do not repeat information.
+        return flashcards
 
-Return ONLY:
+    except Exception as e:
 
-Q: ...
-A: ...
+        logger.exception(
+            "Flashcard generation failed: %s",
+            e
+        )
 
-No numbering.
-No markdown.
-No explanations.
-
-Summary:
-
-{summary}
-"""
-
-    response = ollama.chat(
-
-        model="qwen3:1.7b",
-
-        messages=[
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
-
-    )
-
-    raw_output = response["message"]["content"]
-
-    flashcards = parse_flashcards(raw_output)
-
-    return flashcards
+        return []

@@ -1,21 +1,33 @@
+"""
+Main evaluation controller.
+"""
+
+from evaluation.metrics import calculate_basic_metrics
+from evaluation.rouge_score import calculate_rouge
+
+
 def evaluate_summary(original_text, summary):
-    """
-    Evaluate AI-generated summary.
-    """
 
-    original_words = len(original_text.split())
-    summary_words = len(summary.split())
+    results = {}
 
-    compression = (
-        ((original_words - summary_words) / original_words) * 100
-        if original_words > 0 else 0
+    # Basic Metrics
+    results.update(
+        calculate_basic_metrics(original_text, summary)
     )
 
-    reading_time = round(summary_words / 200, 2)
+    # ROUGE
+    results.update(
+        calculate_rouge(original_text, summary)
+    )
 
-    return {
-        "original_words": original_words,
-        "summary_words": summary_words,
-        "compression": round(compression, 2),
-        "reading_time": reading_time
-    }
+    # Import BERTScore only when needed
+    from evaluation.bertscore import calculate_bertscore
+
+    results.update(
+        calculate_bertscore(
+            original_text,
+            summary
+        )
+    )
+
+    return results

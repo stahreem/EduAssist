@@ -24,6 +24,13 @@ D. ...
 
 Answer: A
 
+Return ONLY the option letter (A, B, C, or D).
+
+Do NOT write:
+Answer: Paris
+Answer: Option A
+Answer: A. Paris
+
 Summary:
 
 {text}

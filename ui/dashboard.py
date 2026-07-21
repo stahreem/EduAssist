@@ -15,13 +15,13 @@ from ui.components.flashcards import show_flashcards
 # from ui.components.rag import show_chat
 
 def run_dashboard():
-    initialize_session()
 
     st.set_page_config(
         page_title="EduAssist",
         page_icon="📚",
         layout="wide"
     )
+    initialize_session()
 
     show_sidebar()
 
@@ -50,6 +50,8 @@ def run_dashboard():
         st.session_state.translated_keywords = {}
         st.session_state.translated_quiz = {}
         st.session_state.translated_flashcards = {}
+        st.session_state.evaluation = None
+        st.session_state.judge_report = None
         
         data = process_document(uploaded_file)
 

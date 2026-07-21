@@ -40,7 +40,7 @@ def parse_quiz(raw_quiz):
                 options.append(line)
 
             elif line.lower().startswith("answer"):
-                answer = line.split(":")[-1].strip()
+                answer = line.split(":", 1)[1].strip()
 
         quizzes.append(
             {

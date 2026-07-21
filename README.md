@@ -1,36 +1,94 @@
-| Module                        | Status    |
-| ----------------------------- | --------- |
-| ✅ Project Setup              | Completed |
-| ✅ Streamlit UI               | Completed |
-| ✅ PDF Upload                 | Completed |
-| ✅ PDF Reader (`pdfplumber`)  | Completed |
-| ✅ Text Preprocessing (spaCy) | Completed |
-| 🔄 Language Detection         | Next      |
-| ⏳ Text Summarization         | Pending   |
-| ⏳ Keyword Extraction         | Pending   |
-| ⏳ Quiz Generation            | Future    |
-| ⏳ Flashcards                 | Future    |
+# 📚 EduAssist: A Multilingual AI Learning Assistant
 
-📖 EduAssist Development Journal (Current Progress)
+## Overview
 
-Let's start maintaining a proper project journal.
+EduAssist is an AI-powered multilingual learning assistant designed to help students understand educational documents more efficiently. The application allows users to upload PDF documents and automatically generates concise summaries, important keywords, quizzes, flashcards, and multilingual translations using local Large Language Models (LLMs).
 
-🚀 Phase 1: Project Foundation
-Objective
+Unlike many cloud-based AI tools, EduAssist is designed to work with **local AI models through Ollama**, ensuring better privacy, offline capability, and zero API costs.
 
-Set up the project structure and development environment.
+---
 
-Completed
-Created GitHub repository
-Created virtual environment (.venv)
-Added .gitignore
-Installed required libraries
-Created modular folder structure
-Built initial Streamlit application
+# Features
 
-EduAssist/
+### 📄 PDF Processing
+
+- Upload PDF documents
+- Extract text using pdfplumber
+- Automatic language detection
+- Text preprocessing using spaCy
+
+---
+
+### 🤖 AI Summarization
+
+- Chunk-based document summarization
+- Intelligent summary merging
+- Educational prompt engineering
+- Local LLM inference using Qwen
+
+---
+
+### 🔑 Keyword Extraction
+
+- KeyBERT-based keyword extraction
+- Dynamic keyword count based on document length
+- Duplicate keyword removal
+
+---
+
+### 📝 Quiz Generation
+
+Automatically generates multiple-choice questions from the AI-generated summary.
+
+Features:
+
+- 5 educational MCQs
+- Four options per question
+- Automatic answer checking
+- Translation support
+
+---
+
+### 🃏 Flashcards
+
+Automatically creates study flashcards from the generated summary.
+
+Features:
+
+- Question–Answer format
+- Educational prompt engineering
+- Translation support
+
+---
+
+### 🌍 Multilingual Translation
+
+Translate generated content into multiple languages.
+
+Currently Supported:
+
+- Hindi
+- Telugu
+- Urdu
+- Tamil
+- Kannada
+- Malayalam
+- French
+- German
+- Spanish
+- Arabic
+- Japanese
+
+---
+
+## Current Project Architecture
+
+```
+EduAssist
 │
 ├── app/
+├── config/
+├── core/
 ├── preprocessing/
 ├── summarization/
 ├── keywords/
@@ -38,289 +96,230 @@ EduAssist/
 ├── flashcards/
 ├── translation/
 ├── models/
+├── evaluation/
+├── exports/
+├── rag/
+├── ui/
 ├── utils/
-├── config.py
-├── requirements.txt
+├── tests/
 └── README.md
+```
 
-Learning
-How to organize an AI project
-Importance of modular architecture
-Virtual environments
-GitHub project management
+---
 
-📄 Phase 2: PDF Processing Pipeline
-Goal
+# Workflow
 
-Extract readable text from uploaded PDFs.
-
-Completed
-
-✔ PDF Upload
-
-✔ PDF Extraction
-
-using
-
-pdfplumber
-Current Pipeline
+```
 Upload PDF
-↓
-Extract Text
-
-Observation
-
-Works perfectly for:
-Notes
-Research papers
-Digital PDFs
-
-🧹 Phase 3: Text Preprocessing
-Completed
-
-Implemented
-spaCy
-
-Operations
-✔ Lowercase
-✔ Remove punctuation
-✔ Lemmatization
-✔ Remove stop words
-✔ Normalize text
-
-Extracted Text
-↓
-spaCy Cleaning
-↓
-Clean Text
-
-🌍 Phase 4: Language Detection
-Completed
-
-Implemented
-langdetect
-
-Pipeline
-Clean Text
-↓
+      │
+      ▼
+Text Extraction
+      │
+      ▼
 Language Detection
-↓
-English
-Hindi
-etc.
+      │
+      ▼
+Text Cleaning
+      │
+      ▼
+Document Chunking
+      │
+      ▼
+Local LLM (Qwen via Ollama)
+      │
+      ▼
+Summary Generation
+      │
+      ├───────────────┐
+      ▼               ▼
+Keyword         Flashcards
+Extraction
+      │               │
+      ▼               ▼
+Quiz          Translation
+Generation
+```
 
-Innovation
-Instead of cleaning differently for each language now, we decided to:
-Detect language first, then later create language-specific preprocessing modules.
+---
 
-This makes the system scalable.
+# Technologies Used
 
+## Programming Language
 
-🤖 Phase 5: Local AI Integration
-Completed
+- Python 3.13
 
-Installed
-✔ Ollama
-Downloaded
-✔ Qwen
-Created
-✔ ollama_client.py
-Created reusable architecture
-Python
-↓
-Ollama
-↓
-Qwen
+---
 
-Why?
-Every AI feature will reuse this client.
-No duplicate code.
+## Frontend
 
-📚 Phase 6: Text Summarization
-Completed
-Created
-✔ prompts.py
-✔ summarizer.py
-✔ Prompt Engineering
+- Streamlit
 
-Tested
-Input
-↓
-Qwen
-↓
-Summary
+---
 
-Successfully generated summaries.
+## NLP
 
-💡 Innovations We Have Already Added
+- spaCy
+- LangDetect
+- KeyBERT
 
-These are not in a normal summarization project.
+---
 
-Innovation 1
+## Local AI
 
-Modular AI architecture
+- Ollama
+- Qwen 3 (1.7B)
 
-Instead of putting everything in one file
+---
 
-App
+## PDF Processing
 
-↓
+- pdfplumber
 
-Summarizer
+---
 
-↓
+## Machine Learning
 
-Ollama
+- Sentence Transformers
+- Scikit-Learn
 
-↓
+---
 
-Model
-Innovation 2
+# Installation
 
-Prompt Engineering
+Clone the repository
 
-Instead of
+```bash
+git clone https://github.com/your-username/EduAssist.git
+```
 
-Summarize this.
+Move into the project
 
-we designed educational prompts.
+```bash
+cd EduAssist
+```
 
-Innovation 3
+Create a virtual environment
 
-Local AI
+```bash
+python -m venv .venv
+```
 
-No API
+Activate the environment
 
-No internet
+Windows
 
-Data remains private.
+```bash
+.venv\Scripts\activate
+```
 
-Innovation 4
+Linux/macOS
 
-Scanned PDF Detection
+```bash
+source .venv/bin/activate
+```
 
-We discovered something important.
+Install dependencies
 
-Some PDFs don't contain text.
+```bash
+pip install -r requirements.txt
+```
 
-Instead they contain images.
+Install spaCy model
 
-Example
+```bash
+python -m spacy download en_core_web_sm
+```
 
-Urdu NCERT PDF
+Install Ollama
 
-The extractor failed.
+Download from:
 
-Decision
+https://ollama.com/
 
-Future pipeline
+Pull the Qwen model
 
-PDF
+```bash
+ollama pull qwen3:1.7b
+```
 
-↓
+Run the application
 
-Check if text exists
+```bash
+streamlit run app/app.py
+```
 
-↓
+---
 
-YES → PDF Reader
+# Current Features
 
-↓
+- PDF Upload
+- PDF Text Extraction
+- Language Detection
+- Text Cleaning
+- Chunk-based Summarization
+- Summary Merging
+- Keyword Extraction
+- Quiz Generation
+- Flashcard Generation
+- Translation
+- Modular UI
+- Session Management
 
-NO → OCR
-Innovation 5
+---
 
-OCR Pipeline
+# Future Work
 
-Future
+The following features are planned:
 
-PDF
+- OCR support for scanned PDFs
+- Mind Map generation
+- Retrieval-Augmented Generation (RAG)
+- AI Chat with uploaded documents
+- PDF export
+- DOCX export
+- ROUGE Evaluation
+- BERTScore Evaluation
+- LLM-as-a-Judge Evaluation
+- Semantic Search
+- Citation Generation
+- Multi-document summarization
 
-↓
+---
 
-PyMuPDF
+# Evaluation Metrics (Planned)
 
-↓
+- Compression Ratio
+- Reading Time Reduction
+- ROUGE Score
+- BERTScore
+- Keyword Precision
+- LLM Evaluation
+- Response Time
 
-No Text?
+---
 
-↓
+# Advantages
 
-PaddleOCR
+- Works completely offline
+- No API costs
+- Privacy-friendly
+- Modular architecture
+- Easy to extend
+- Educational prompt engineering
+- Supports multilingual learning
 
-↓
+---
 
-Clean Text
+# License
 
-↓
+This project is intended for educational and research purposes.
 
-Language Detection
-Future Innovations
-Chunk Summarization
+---
 
-Instead of
+# Author
 
-100 Pages
+**Shifa Tahreem**
 
-↓
+M.Tech Artificial Intelligence & Machine Learning
 
-One Prompt
-
-We'll do
-
-100 Pages
-
-↓
-
-Chunks
-
-↓
-
-Summary
-
-↓
-
-Merge
-
-↓
-
-Final Summary
-Translation
-Summary
-
-↓
-
-Translate
-
-↓
-
-Hindi
-
-Urdu
-
-Telugu
-
-etc.
-Flashcards
-
-Generated using Qwen.
-
-Quiz Generation
-
-MCQs
-
-Short Answers
-
-True/False
-
-AI Tutor
-
-Chat with uploaded PDF.
-
-⭐ The Biggest Innovation
-
-Now let's answer your question.
-
-Can we calculate summary accuracy?
-
-Absolutely. In fact, this is one of the strongest research contributions we can add.
+EduAssist – A Multilingual AI Learning Assistant

@@ -37,16 +37,20 @@ def display_quiz(quizzes):
 
         ):
 
-            if choice.startswith(quiz["answer"]):
+            correct_letter = quiz["answer"].strip().upper()
 
+            correct_option = next(
+                (
+                    option
+                    for option in quiz["options"]
+                    if option.startswith(correct_letter + ".")
+                ),
+                correct_letter
+            )
+
+            if choice.startswith(correct_letter + "."):
                 st.success("✅ Correct")
-
             else:
-
-                st.error(
-
-                    f"❌ Correct Answer: {quiz['answer']}"
-
-                )
+                st.error(f"❌ Correct Answer: {correct_option}")
 
         st.divider()

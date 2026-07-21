@@ -13,7 +13,7 @@ def parse_flashcards(raw_text):
 
             line = line.strip()
 
-            if line.startswith("Q:"):
+            if line.upper().startswith("Q:"):
                 question = line.replace("Q:", "").strip()
 
             elif line.startswith("A:"):

@@ -25,7 +25,7 @@ SUPPORTED_FILE_TYPES = [".pdf"]
 # Summarization
 # -----------------------------
 
-CHUNK_SIZE = 2000
+CHUNK_SIZE = 1000
 
 MIN_SUMMARY_LENGTH = 50
 

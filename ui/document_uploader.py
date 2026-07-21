@@ -2,8 +2,12 @@ import streamlit as st
 
 
 def show_document_uploader():
+    """
+    Display PDF uploader.
+    """
 
     return st.file_uploader(
-        "Choose PDF",
-        type=["pdf"]
+        "📄 Upload a PDF document",
+        type=["pdf"],
+        help="Supported format: PDF"
     )

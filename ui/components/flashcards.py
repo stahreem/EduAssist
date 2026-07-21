@@ -1,10 +1,14 @@
 import streamlit as st
 
 from flashcards.flashcard_generator import generate_flashcards
-from flashcards.formatter import display_flashcards
 from ui.components.translation import show_translation
 
+
 def show_flashcards():
+
+    # --------------------------------------------------
+    # Generate Flashcards
+    # --------------------------------------------------
 
     if st.button(
         "🗂 Generate Flashcards",
@@ -13,52 +17,60 @@ def show_flashcards():
 
         if st.session_state.summary is None:
 
-            st.warning(
-                "Please generate the summary first."
-            )
+            st.warning("Please generate the summary first.")
             return
 
         if st.session_state.flashcards is None:
 
-            with st.spinner(
-                "Generating Flashcards..."
-            ):
+            with st.spinner("Generating Flashcards..."):
 
-                cards = generate_flashcards(
+                st.session_state.flashcards = generate_flashcards(
                     st.session_state.summary
                 )
 
-                st.session_state.flashcards = cards
-
-            st.success(
-                "Flashcards Generated Successfully!"
-            )
+            st.success("Flashcards Generated Successfully!")
 
         else:
 
-            st.info(
-                "Flashcards already generated."
-            )
+            st.info("Flashcards already generated.")
 
-    if st.session_state.flashcards is not None:
+    # --------------------------------------------------
+    # Display Flashcards
+    # --------------------------------------------------
 
-        display_flashcards(st.session_state.flashcards)
+    if st.session_state.flashcards is None:
+        return
 
-    # st.write(type(st.session_state.flashcards))
-    # st.write(st.session_state.flashcards)
+    flashcards = st.session_state.flashcards
 
-        flashcards = st.session_state.flashcards
-        flashcard_text = ""
+    st.subheader("🃏 Flashcards")
 
-        for card in flashcards:
+    cols = st.columns(2)
 
-            flashcard_text += (
-                f"Question: {card['question']}\n"
-                f"Answer: {card['answer']}\n\n"
-            )
+    for i, card in enumerate(flashcards):
 
-        show_translation(
-            text=flashcard_text,
-            key="flashcards"
-        )
-    
+        with cols[i % 2]:
+
+            with st.expander(f"Flashcard {i + 1}", expanded=False):
+
+                st.markdown("**❓ Question**")
+                st.write(card["question"])
+
+                st.markdown("**✅ Answer**")
+                st.success(card["answer"])
+
+    # --------------------------------------------------
+    # Translation
+    # --------------------------------------------------
+
+    flashcard_text = "\n\n".join(
+        f"Question: {card['question']}\nAnswer: {card['answer']}"
+        for card in flashcards
+    )
+
+    st.divider()
+
+    show_translation(
+        text=flashcard_text,
+        key="flashcards"
+    )

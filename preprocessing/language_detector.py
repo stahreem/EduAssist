@@ -1,9 +1,7 @@
 from langdetect import detect, DetectorFactory
 
-# Makes language detection consistent every time
 DetectorFactory.seed = 0
 
-# Dictionary for readable language names
 LANGUAGE_MAP = {
     "en": "English",
     "hi": "Hindi",
@@ -12,14 +10,16 @@ LANGUAGE_MAP = {
 }
 
 
-def detect_language(text):
-    """
-    Detect language from original extracted text.
-    """
+def detect_language(text: str) -> tuple[str, str]:
+
+    if not text.strip():
+        return "unknown", "Unknown"
 
     try:
 
-        language_code = detect(text)
+        sample = text[:5000]
+
+        language_code = detect(sample)
 
         language_name = LANGUAGE_MAP.get(
             language_code,

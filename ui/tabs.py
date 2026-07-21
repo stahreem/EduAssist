@@ -9,12 +9,12 @@ def show_tabs(extracted_text, cleaned_text, summary):
     ])
 
     with tab1:
-        st.markdown("### AI Generated Summary")
+        st.markdown("### Summary")
         st.markdown(summary)
 
     with tab2:
         st.text_area(
-            "Extracted Text",
+            "Original Text",
             extracted_text,
             height=500
         )

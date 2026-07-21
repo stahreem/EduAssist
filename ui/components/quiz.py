@@ -5,9 +5,13 @@ from quiz.parser import parse_quiz
 from quiz.formatter import display_quiz
 from ui.components.translation import show_translation
 
+
 def show_quiz():
-    print("show_quiz() called")
-    if st.button("📝 Generate Quiz", use_container_width=True):
+
+    if st.button(
+        "📝 Generate Quiz",
+        use_container_width=True
+    ):
 
         if st.session_state.summary is None:
 
@@ -31,26 +35,24 @@ def show_quiz():
 
             st.info("Quiz already generated.")
 
-    # -------------------------
+    # ------------------------------------
 
     if st.session_state.quiz is not None:
 
         display_quiz(st.session_state.quiz)
 
-        quiz = st.session_state.quiz
-        quiz_text = ""
+        quiz_text = "\n\n".join(
 
-        for q in st.session_state.quiz:
+            f"""Question: {q['question']}
 
-            quiz_text += (
-                f"Question: {q['question']}\n"
-            )
+{chr(10).join(q['options'])}
 
-            for option in q["options"]:
+Answer: {q['answer']}"""
 
-                quiz_text += option + "\n"
+            for q in st.session_state.quiz
+        )
 
-            quiz_text += f"Answer: {q['answer']}\n\n"
+        st.divider()
 
         show_translation(
             text=quiz_text,

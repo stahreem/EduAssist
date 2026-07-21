@@ -5,12 +5,9 @@ from translation.translator import translate_text
 
 
 def show_translation(text, key):
-    
-    st.write("show_translation called")
-    st.write(f"key = {key}")
+
     translated_key = f"translated_{key}"
 
-    # Store translations as a dictionary
     if translated_key not in st.session_state:
         st.session_state[translated_key] = {}
 
@@ -18,7 +15,6 @@ def show_translation(text, key):
 
     if clicked:
 
-        # Translate only if this language hasn't been translated yet
         if language not in st.session_state[translated_key]:
 
             with st.spinner(f"🌍 Translating to {language}..."):
@@ -32,13 +28,16 @@ def show_translation(text, key):
 
         else:
 
-            st.info(f"Translation already available in {language}")
+            st.info(
+                f"Translation already available in {language}"
+            )
 
-    # Display the translation for the currently selected language
     if language in st.session_state[translated_key]:
 
         st.subheader(f"🌍 Translation ({language})")
 
-        st.info(
-            st.session_state[translated_key][language]
+        st.text_area(
+            "Translated Output",
+            st.session_state[translated_key][language],
+            height=250
         )

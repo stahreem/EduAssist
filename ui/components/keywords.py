@@ -3,23 +3,26 @@ import streamlit as st
 from keywords.keyword_extractor import extract_keywords
 from ui.components.translation import show_translation
 
+
 def show_keywords():
 
-    if st.button("🔑 Generate Keywords", use_container_width=True):
+    if st.button(
+        "🔑 Generate Keywords",
+        use_container_width=True
+    ):
 
         if st.session_state.summary is None:
 
             st.warning("Please generate the summary first.")
+            return
 
-        elif st.session_state.keywords is None:
+        if st.session_state.keywords is None:
 
             with st.spinner("Extracting Keywords..."):
 
-                keywords = extract_keywords(
+                st.session_state.keywords = extract_keywords(
                     st.session_state.cleaned_text
                 )
-
-                st.session_state.keywords = keywords
 
             st.success("Keywords Generated Successfully!")
 
@@ -27,23 +30,27 @@ def show_keywords():
 
             st.info("Keywords already generated.")
 
-    # --------------------------
+    # -------------------------------------
 
-    if st.session_state.keywords is not None:
+    if st.session_state.keywords is None:
+        return
 
-        st.subheader("🔑 Extracted Keywords")
+    st.subheader("🔑 Extracted Keywords")
 
-        cols = st.columns(4)
+    cols = st.columns(4)
 
-        for i, keyword in enumerate(st.session_state.keywords):
+    for i, keyword in enumerate(st.session_state.keywords):
 
-            cols[i % 4].success(keyword)
+        with cols[i % 4]:
+            st.success(keyword)
 
-        # keyword_text = ", ".join(st.session_state.keywords)
-        keyword_text = ", ".join(
-            [k[0] for k in st.session_state.keywords]
-        )
-        show_translation(
-            text=keyword_text,
-            key="keywords"
-        )
+    keyword_text = ", ".join(
+        st.session_state.keywords
+    )
+
+    st.divider()
+
+    show_translation(
+        text=keyword_text,
+        key="keywords"
+    )

@@ -2,25 +2,38 @@ import streamlit as st
 
 
 def show_sidebar():
-
     st.sidebar.title("📚 EduAssist")
 
     st.sidebar.info("""
-Version 0.2
+### Version 1.0
 
-Completed Modules
+### Completed Modules
 
 ✅ PDF Upload
+
 ✅ Text Extraction
-✅ Cleaning
+
+✅ Text Cleaning
+
 ✅ Language Detection
-✅ AI Summary
 
-Upcoming
+✅ AI Summarization
 
-⬜ KeyBERT
-⬜ Flashcards
-⬜ Quiz
-⬜ Translation
-⬜ RAG
+✅ Keyword Extraction
+
+✅ Quiz Generation
+
+✅ Flashcards
+
+✅ Translation
+
+### Upcoming
+
+⬜ Mind Map
+
+⬜ RAG Chat
+
+⬜ OCR Support
+
+⬜ Export to PDF / DOCX
 """)
